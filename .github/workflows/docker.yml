@@ -12,13 +12,11 @@ on:
       - '*'
 
 jobs:
-
-  build:
-    name: Build
+  docker:
+    name: Docker
     runs-on: ubuntu-latest
     steps:
-
-      - name: Check out code into the Go module directory
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -53,7 +51,7 @@ jobs:
 
       - name: Build and Push (dev)
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
@@ -66,7 +64,7 @@ jobs:
 
       - name: Build and Push (latest)
         if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
